@@ -1,23 +1,45 @@
-import logo from './logo.svg';
+
 import './App.css';
+import { useEffect,useState } from 'react';
 
 function App() {
+  const [data,setData] = useState([])
+  useEffect(()=> { fetch("https://mlm.samesameindia.com/api/package").then((result)=>{
+    result.json().then((resp)=>{
+      setData(resp)
+
+    })
+  })
+},[])
+console.warn(data);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <h1>Get Api</h1>
+    <table border={1}>
+      <thead>
+      <tr>
+        <td>id</td>
+        <td>Package Name</td>
+        <td>Price</td>
+        <td>Percentage</td>
+        <td>Direct Income</td>
+      </tr>
+      </thead>
+      <tbody>
+    {
+    data.map((item)=>
+    <tr>
+       <td>{item.id}</td>
+        <td>{item.package_name}</td>
+        <td>{item.price}</td>
+        <td>{item.percentage}</td>
+        <td>{item.direct_Income}</td>
+    </tr>
+    
+    
+    )}
+    </tbody>
+    </table>
     </div>
   );
 }
